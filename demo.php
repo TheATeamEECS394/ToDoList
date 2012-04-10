@@ -5,7 +5,7 @@ require "todo.class.php";
 
 
 // Select all the todos, ordered by position:
-$query = mysql_query("SELECT * FROM `tz_todo` ORDER BY `position` ASC");
+$query = mysql_query("SELECT * FROM `tz_todo` ORDER BY `PriorityNumber` ASC");
 
 $todos = array();
 
@@ -57,13 +57,49 @@ while($row = mysql_fetch_assoc($query)){
 <div id="dialog-confirm" title="Delete TODO Item?">Are you sure you want to delete this TODO item?</div>
 
 
-<p class="note">The todos are flushed every hour. You can add only one in 5 seconds.</p>
-
 <!-- Including our scripts -->
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="jquery.autocomplete.pack.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+	$("#city").autocomplete("http://ws.geonames.org/searchJSON", {
+		dataType: 'jsonp',
+		parse: function(data) {
+			var rows = new Array();
+			data = data.geonames;
+			for(var i=0; i<data.length; i++){
+				rows[i] = { data:data[i], value:data[i].name, result:data[i].name };
+			}
+			return rows;
+		},
+		formatItem: function(row, i, n) {
+			return row.name + ', ' + row.adminCode1;
+		},
+		extraParams: {
+			// geonames doesn't support q and limit, which are the autocomplete plugin defaults, so let's blank them out.
+			q: '',
+			limit: '',
+			country: 'US',
+			featureClass: 'P',
+			style: 'full',
+			maxRows: 50,
+			name_startsWith: function () { return $("#city").val() }
+		},
+		max: 50
+	}); 
+     
+  });
+</script>
+
+
 
 </body>
 </html>

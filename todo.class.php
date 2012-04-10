@@ -1,4 +1,4 @@
-2<?php
+<?php
 
 /* Defining the ToDo class */
 
@@ -27,6 +27,9 @@ class ToDo{
 			<li id="todo-'.$this->data['id'].'" class="todo">
 			
 				<div class="text">'.$this->data['text'].'</div>
+				Priority Number: <div class="priorityNumber">'.$this->data['PriorityNumber'].'</div>
+        		Location:<form name="test" class="cool" action="">
+        		<div class="stuff">'.$this->data['Location'].'</div></form>
 				
 				<div class="actions">
 					<a href="#" class="edit">Edit</a>
@@ -49,13 +52,23 @@ class ToDo{
 		of the ToDo. Updates the database.
 	*/
 		
-	public static function edit($id, $text){
+	public static function edit($id, $text, $PriorityNumber, $Location){
 		
 		$text = self::esc($text);
+		$PriorityNumber = self::esc($PriorityNumber);
+		
 		if(!$text) throw new Exception("Wrong update text!");
 		
 		mysql_query("	UPDATE tz_todo
 						SET text='".$text."'
+						WHERE id=".$id
+					);
+				mysql_query("	UPDATE tz_todo
+						SET PriorityNumber ='".$PriorityNumber."'
+						WHERE id=".$id
+					);
+		mysql_query("	UPDATE tz_todo
+						SET Location='".$Location."'
 						WHERE id=".$id
 					);
 		
@@ -151,3 +164,4 @@ class ToDo{
 } // closing the class definition
 
 ?>
+

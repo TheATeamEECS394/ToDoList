@@ -19,7 +19,7 @@ try{
 			break;
 			
 		case 'edit':
-			ToDo::edit($id,$_GET['text']);
+			ToDo::edit($id,$_GET['text'],$_GET['PriorityNumber'],$_GET['Location']);
 			break;
 			
 		case 'new':

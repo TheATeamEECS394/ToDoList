@@ -2,10 +2,10 @@
 
 /* Database config */
 
-$db_host		= 'localhost';
+$db_host		= 'todolistdb.cye2rtsyfggv.us-east-1.rds.amazonaws.com';
 $db_user		= 'root';
-$db_pass		= '';
-$db_database	= 'test'; 
+$db_pass		= 'poop16';
+$db_database	= 'todolist'; 
 
 /* End config */
 
